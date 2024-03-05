@@ -17,7 +17,7 @@ if img_file_buffer is not None:
       canny = cv2.Canny(blur, min, max, 1)
       dilated = cv2.dilate(canny, (1,1), iterations = 4)
       (cnt, heirarchy) = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-      rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+      rgb = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
       cv2.drawContours(rgb, cnt, -1, (0,255,0), 2)
       plt.figure(figsize = (5,5))
       rgb = cv2.putText(rgb, 'Ovos na palheta: '+ str(len(cnt)), (30, 60), cv2.FONT_HERSHEY_SIMPLEX,
