@@ -11,7 +11,7 @@ if img_file_buffer is not None:
       # To read image file buffer with OpenCV:
       bytes_data = img_file_buffer.getvalue()
       cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
-      gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+      gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
       #ar, thresh = cv2.threshold(gray,40,255,cv2.THRESH_BINARY)
       blur = cv2.GaussianBlur(gray, (11,11), 1)
       canny = cv2.Canny(blur, min, max, 1)
