@@ -4,6 +4,9 @@ import numpy as np
 
 img_file_buffer = st.camera_input("Take a picture")
 
+min = st.number_input('min', value=100)
+max = st.number_input('max', value=200)
+
 if img_file_buffer is not None:
       # To read image file buffer with OpenCV:
       bytes_data = img_file_buffer.getvalue()
@@ -22,8 +25,5 @@ if img_file_buffer is not None:
 
     # Check the type of cv2_img:
     # Should output: <class 'numpy.ndarray'>
-     st.write(type(rgb))
+      st.write(type(rgb))
 
-    # Check the shape of cv2_img:
-    # Should output shape: (height, width, channels)
-     #st.write(cv2_img.shape)
