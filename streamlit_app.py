@@ -1,32 +1,39 @@
 import cv2
+import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
+import tempfile
 
-st.title("Webcam Live Feed")
-run = st.checkbox('Run')
-FRAME_WINDOW = st.image([])
-camera = cv2.VideoCapture(0)
+# Use this line to capture video from the webcam
+cap = cv2.VideoCapture(0)
 
-while run:
-    _, frame = camera.read()
+
+# Set the title for the Streamlit app
+st.title("Video Capture with OpenCV")
+
+frame_placeholder = st.empty()
+
+# Add a "Stop" button and store its state in a variable
+stop_button_pressed = st.button("Stop")
+
+while cap.isOpened() and not stop_button_pressed:
+    ret, frame = cap.read()
+
+    if not ret:
+        st.write("The video capture has ended.")
+        break
+
+    # You can process the frame here if needed
+    # e.g., apply filters, transformations, or object detection
+
+    # Convert the frame from BGR to RGB format
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    
-    min = st.number_input('mínimo Canny')
-    max = st.number_input('maximo Canny')
-    image = cv2.imread(frame)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    #ar, thresh = cv2.threshold(gray,40,255,cv2.THRESH_BINARY)
-    blur = cv2.GaussianBlur(gray, (11,11), 1)
-    canny = cv2.Canny(blur, min, max, 1)
-    dilated = cv2.dilate(canny, (1,1), iterations = 4)
-    (cnt, heirarchy) = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    cv2.drawContours(rgb, cnt, -1, (0,255,0), 2)
-    plt.figure(figsize = (5,5))
-    FRAME_WINDOW.image(rgb)
-    st.text(str(len(cnt)))
-else:
-    st.write('Stopped')
 
+    # Display the frame using Streamlit's st.image
+    frame_placeholder.image(frame, channels="RGB")
 
+    # Break the loop if the 'q' key is pressed or the user clicks the "Stop" button
+    if cv2.waitKey(1) & 0xFF == ord("q") or stop_button_pressed: 
+        break
 
+cap.release()
+cv2.destroyAllWindows()
