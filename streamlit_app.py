@@ -19,7 +19,6 @@ if img_file_buffer is not None:
       (cnt, heirarchy) = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
       rgb = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
       cv2.drawContours(rgb, cnt, -1, (0,255,0), 2)
-      plt.figure(figsize = (5,5))
       rgb = cv2.putText(rgb, 'Ovos na palheta: '+ str(len(cnt)), (30, 60), cv2.FONT_HERSHEY_SIMPLEX,
                         1, (255, 255, 255) , 2, cv2.LINE_AA)
 
