@@ -24,5 +24,5 @@ if img_file_buffer is not None:
 
     # Check the type of cv2_img:
     # Should output: <class 'numpy.ndarray'>
-      st.write(type(rgb))
+      st.image(rgb)
 
