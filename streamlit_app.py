@@ -1,15 +1,18 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
+import cv2
+import numpy as np
 
-def main():
-    st.title("Webcam Stream")
+img_file_buffer = st.camera_input("Take a picture")
 
-    webrtc_ctx = webrtc_streamer(key="example", video_transformer_factory=None)
+if img_file_buffer is not None:
+    # To read image file buffer with OpenCV:
+    bytes_data = img_file_buffer.getvalue()
+    cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
 
-    if webrtc_ctx.video_receiver:
-        st.write("Capturing...")
-        video_frame = webrtc_ctx.video_receiver.get_frame()
-        st.image(video_frame)
+    # Check the type of cv2_img:
+    # Should output: <class 'numpy.ndarray'>
+    st.write(type(cv2_img))
 
-if __name__ == "__main__":
-    main()
+    # Check the shape of cv2_img:
+    # Should output shape: (height, width, channels)
+    st.write(cv2_img.shape)
