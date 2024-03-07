@@ -24,5 +24,10 @@ if img_file_buffer is not None:
 
     # Check the type of cv2_img:
     # Should output: <class 'numpy.ndarray'>
+      st.image(cv2_img)
+      st.image(gray)
+      st.image(blur)
+      st.image(canny)
+      st.image(dilated)
       st.image(rgb)
 
